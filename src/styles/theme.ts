@@ -1,13 +1,16 @@
 import { createSystem, defaultConfig, defineConfig } from "@chakra-ui/react";
 
+import "@/styles/fonts.css";
+
 const config = defineConfig({
   globalCss: {
     "*": {
       boxSizing: "border-box",
     },
-    body: {
+    "html, body": {
       color: "#333",
       backgroundColor: "#fff",
+      fontFamily: `"Noto Sans JP", sans-serif`,
     },
   },
 });
