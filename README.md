@@ -1,73 +1,84 @@
-# React + TypeScript + Vite
+# ErrorDict - エラー辞典
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## プロジェクト概要
 
-Currently, two official plugins are available:
+プログラミング学習中に遭遇したエラーと、その解決方法を整理・蓄積する個人学習用に作成したサイトです。
+エラーの閲覧・登録・編集・削除を実装しています。
+学習中に「同じエラーを何度も調べ直す」課題を解決することを目的としています。
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 使用技術
 
-## React Compiler
+### Frontend
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Chakra UI
+- React
+- TypeScript
+- Vite
 
-## Expanding the ESLint configuration
+### Backend
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Supabase(Database / Auth / RLS)
+  ※Auth は Phase2
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Database
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- PostgreSQL(Supabase 管理)
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 主な機能
+
+- エラー一覧表示
+- エラー詳細表示
+- エラー新規登録
+- エラー編集
+- エラー削除
+- キーワード検索
+
+## 画面構成
+
+- /errors : エラー一覧
+- /errors/:id : エラー詳細
+- /errors/new : エラー新規登録
+- /errors/:id/edit : エラー編集
+  ※ 認証機能は Phase2 で実装予定
+
+## データベース設計
+
+- errors テーブルを中心としたシンプルな構成
+- MVP では 1 テーブル構成
+- Phase2 で profiles テーブルを追加予定
+
+## テスト
+
+- Jest
+- React Testing Library
+- コンポーネント単位の簡易テスト
+
+## CI/CD
+
+- GitHub Actions によるビルド・テスト・自動デプロイ(Firebase Hosting)
+
+## デモ
+
+※ 準備中
+
+## ローカル環境での起動
+
+```bash
+1. リポジトリをクローン
+git clone https://github.com/masakiYLv1/errordict.git
+
+2. 作業ディレクトへ移動
+cd errordict
+
+3. パッケージをインストール
+npm install
+
+4. プロジェクトを起動
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 今後の予定（Phase2）
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- Supabase Auth を用いたユーザー認証の実装
+- profile テーブルの追加
+- ユーザーごとのエラーメッセージ管理
