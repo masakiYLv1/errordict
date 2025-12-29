@@ -59,7 +59,7 @@
 
 ## デモ
 
-※ 準備中
+[ErrorDict](https://errordict.web.app)
 
 ## ローカル環境での起動
 
