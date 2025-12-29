@@ -1,12 +1,17 @@
 import { render, screen } from "@testing-library/react";
+import { Provider } from "@/components/ui/provider";
+
 import App from "../App";
 
 describe("App tests", () => {
   test("test", () => {
-    render(<App />);
-    expect(true).toBeTruthy();
+    render(
+      <Provider>
+        <App />
+      </Provider>
+    );
 
-    const heading = screen.getByRole("heading");
-    expect(heading).toBeInTheDocument();
+    const button = screen.getByRole("button", { name: "Click me1" });
+    expect(button).toHaveTextContent("Click me1");
   });
 });
