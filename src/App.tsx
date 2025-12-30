@@ -10,6 +10,7 @@ function App() {
         <List.Item>Item 1</List.Item>
         <List.Item>Item 2</List.Item>
       </List.Root>
+      <div>test</div>
     </HStack>
   );
 }
