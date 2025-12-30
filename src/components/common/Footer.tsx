@@ -1,10 +1,12 @@
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Separator, Text } from "@chakra-ui/react";
 
 export const Footer = () => {
   return (
-    <Box bg="blue.500">
-      <Text>Footer</Text>
-      <Text>copylight</Text>
-    </Box>
+    <>
+      <Separator size="md" mt="5" />
+      <Box px="10" py="5">
+        <Text textAlign="center">&copy; 2025</Text>
+      </Box>
+    </>
   );
 };
