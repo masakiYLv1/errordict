@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+
 import { ErrorsList } from "./features/errors/pages/ErrorsList";
 import { ErrorNew } from "./features/errors/pages/ErrorNew";
 import { ErrorDetail } from "./features/errors/pages/ErrorDetail";

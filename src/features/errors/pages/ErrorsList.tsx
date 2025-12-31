@@ -1,6 +1,7 @@
+import { Box, Card, HStack, Input, List, Tag, Text } from "@chakra-ui/react";
+
 import { Footer } from "@/components/common/Footer";
 import { Header } from "@/components/common/Header";
-import { Box, Card, HStack, Input, List, Tag, Text } from "@chakra-ui/react";
 
 export const ErrorsList = () => {
   return (

@@ -1,5 +1,6 @@
 import { Box, Flex, Heading, Separator } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
+
 import { NewErrorButton } from "./button/NewErrorButton";
 
 export const Header = () => {
