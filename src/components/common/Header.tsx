@@ -2,8 +2,15 @@ import { Box, Flex, Heading, Separator } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
 
 import { NewErrorButton } from "./button/NewErrorButton";
+import { EditErrorButton } from "./button/EditErrorButton";
 
-export const Header = () => {
+type HeaderAction = "new" | "edit";
+
+type HeaderProps = {
+  action: HeaderAction;
+};
+
+export const Header = ({ action }: HeaderProps) => {
   return (
     <>
       <Box px="10" py="5">
@@ -11,7 +18,8 @@ export const Header = () => {
           <RouterLink to="/">
             <Heading as="h1">ErrorDict</Heading>
           </RouterLink>
-          <NewErrorButton />
+          {action === "new" && <NewErrorButton />}
+          {action === "edit" && <EditErrorButton />}
         </Flex>
       </Box>
       <Separator size="md" pb="5" />
