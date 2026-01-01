@@ -2,16 +2,21 @@ import { render, screen } from "@testing-library/react";
 import { Provider } from "@/components/ui/provider";
 
 import App from "../App";
+import { BrowserRouter } from "react-router-dom";
+
+jest.mock("@/lib/supabaseClient");
 
 describe("App tests", () => {
-  test("test", () => {
+  test("test", async () => {
     render(
       <Provider>
-        <App />
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
       </Provider>
     );
 
-    const button = screen.getByRole("button", { name: "Click me1" });
-    expect(button).toHaveTextContent("Click me1");
+    const input = await screen.findByPlaceholderText("検索ボックス");
+    expect(input).toBeInTheDocument();
   });
 });

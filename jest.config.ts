@@ -10,6 +10,7 @@ const config: Config = {
   moduleNameMapper: {
     "\\.(gif|ttf|eot|svg|png)$": "<rootDir>/test/mocks/fileMock.js",
     "\\.(css|scss)$": "<rootDir>/test/mocks/fileMock.js",
+    "@/lib/supabaseClient$": "<rootDir>/src/__mocks__/supabaseClient.ts",
     "^@/(.*)$": "<rootDir>/src/$1",
   },
 };
