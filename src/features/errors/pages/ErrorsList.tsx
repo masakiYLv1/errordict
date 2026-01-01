@@ -1,10 +1,9 @@
-import { Box, Card, HStack, Input, List, Tag, Text } from "@chakra-ui/react";
-import { Link as RouterLink } from "react-router-dom";
+import { Box, Input, List, Text } from "@chakra-ui/react";
 
 import { Footer } from "@/components/common/Footer";
 import { Header } from "@/components/common/Header";
 import { useErrors } from "../hooks/useErrors";
-import { formatDate } from "@/utils/date";
+import { ErrorCard } from "../components/ErrorCard";
 
 export const ErrorsList = () => {
   const { errors, error } = useErrors();
@@ -22,23 +21,7 @@ export const ErrorsList = () => {
           <List.Root unstyled>
             {errors.map((item) => (
               <List.Item key={item.id} mb="5">
-                <RouterLink to={`/errors/${item.id}`}>
-                  <Card.Root>
-                    <Card.Body>
-                      <Card.Title>{item.title}</Card.Title>
-                      <HStack>
-                        {item.error_tags
-                          .flatMap((et) => et.tags)
-                          .map((tag) => (
-                            <Tag.Root key={tag.id}>
-                              <Tag.Label>{tag.name}</Tag.Label>
-                            </Tag.Root>
-                          ))}
-                      </HStack>
-                      <Text>{formatDate(item.created_at)}</Text>
-                    </Card.Body>
-                  </Card.Root>
-                </RouterLink>
+                <ErrorCard error={item} />
               </List.Item>
             ))}
           </List.Root>

@@ -10,7 +10,14 @@ export const useErrors = () => {
     const fetchDate = async () => {
       try {
         const data = await fetchErrors();
-        if (data) setErrors(data);
+        if (data) {
+          const formattedErrors: ErrorListItem[] = data.map((item) => ({
+            ...item,
+            tags: item.error_tags.flatMap((t) => t.tags),
+          }));
+
+          setErrors(formattedErrors);
+        }
       } catch (err) {
         console.error(err);
         setError("データの取得に失敗しました。");

@@ -3,7 +3,7 @@ export type ErrorTag = {
   name: string;
 };
 
-export type ErrorListItem = {
+export type ErrorApiResponse = {
   id: string;
   title: string;
   created_at: string;
@@ -11,4 +11,12 @@ export type ErrorListItem = {
   error_tags: {
     tags: ErrorTag[];
   }[];
+};
+
+export type ErrorListItem = {
+  id: string;
+  title: string;
+  created_at: string;
+  updated_at: string;
+  tags: ErrorTag[];
 };
