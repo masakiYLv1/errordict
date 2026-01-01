@@ -2,49 +2,42 @@ import { Box, Card, HStack, Input, List, Tag, Text } from "@chakra-ui/react";
 
 import { Footer } from "@/components/common/Footer";
 import { Header } from "@/components/common/Header";
+import { useErrors } from "../hooks/useErrors";
+import { formatDate } from "@/utils/date";
 
 export const ErrorsList = () => {
+  const { errors, error } = useErrors();
+
+  if (error) return <Text color="red.500">{error}</Text>;
+
   return (
     <Box>
       <Header />
       <Box px="10" mx="7">
-        <Box mb="5">
+        <Box mb="5" w="40%" mx="auto">
           <Input placeholder="検索ボックス" />
         </Box>
         <Box>
           <List.Root unstyled>
-            <List.Item mb="5">
-              <Card.Root>
-                <Card.Body>
-                  <Card.Title>タイトル</Card.Title>
-                  <HStack>
-                    <Tag.Root>
-                      <Tag.Label>React</Tag.Label>
-                    </Tag.Root>
-                    <Tag.Root>
-                      <Tag.Label>TypeScript</Tag.Label>
-                    </Tag.Root>
-                  </HStack>
-                  <Text>登録日</Text>
-                </Card.Body>
-              </Card.Root>
-            </List.Item>
-            <List.Item mb="5">
-              <Card.Root>
-                <Card.Body>
-                  <Card.Title>タイトル2</Card.Title>
-                  <HStack>
-                    <Tag.Root>
-                      <Tag.Label>React</Tag.Label>
-                    </Tag.Root>
-                    <Tag.Root>
-                      <Tag.Label>TypeScript</Tag.Label>
-                    </Tag.Root>
-                  </HStack>
-                  <Text>登録日</Text>
-                </Card.Body>
-              </Card.Root>
-            </List.Item>
+            {errors.map((item) => (
+              <List.Item key={item.id} mb="5">
+                <Card.Root>
+                  <Card.Body>
+                    <Card.Title>{item.title}</Card.Title>
+                    <HStack>
+                      {item.error_tags
+                        .flatMap((et) => et.tags)
+                        .map((tag) => (
+                          <Tag.Root key={tag.id}>
+                            <Tag.Label>{tag.name}</Tag.Label>
+                          </Tag.Root>
+                        ))}
+                    </HStack>
+                    <Text>{formatDate(item.created_at)}</Text>
+                  </Card.Body>
+                </Card.Root>
+              </List.Item>
+            ))}
           </List.Root>
         </Box>
       </Box>
