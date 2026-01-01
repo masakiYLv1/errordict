@@ -22,7 +22,7 @@ export const ErrorsList = () => {
           <List.Root unstyled>
             {errors.map((item) => (
               <List.Item key={item.id} mb="5">
-                <RouterLink to="/errors/:id">
+                <RouterLink to={`/errors/${item.id}`}>
                   <Card.Root>
                     <Card.Body>
                       <Card.Title>{item.title}</Card.Title>
