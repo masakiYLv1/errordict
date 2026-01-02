@@ -14,9 +14,11 @@ export const ErrorCard = ({ error }: ErrorCardProps) => {
     <RouterLink to={`/errors/${error.id}`}>
       <Card.Root>
         <Card.Body>
-          <Card.Title>{error.title}</Card.Title>
-          <ErrorTagList tags={error.tags} />
-          <Text>{formatDate(error.created_at)}</Text>
+          <Card.Title mb="2" textStyle="2xl">
+            {error.title}
+          </Card.Title>
+          <ErrorTagList tags={error.tags} size="sm" />
+          <Text fontSize="14px">{formatDate(error.created_at)}</Text>
         </Card.Body>
       </Card.Root>
     </RouterLink>

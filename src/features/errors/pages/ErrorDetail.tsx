@@ -2,9 +2,7 @@ import {
   Box,
   Button,
   Heading,
-  HStack,
   List,
-  Tag,
   Text,
   Link as ChakraLink,
 } from "@chakra-ui/react";
@@ -14,6 +12,8 @@ import { Footer } from "@/components/common/Footer";
 import { Header } from "@/components/common/Header";
 import { useErrorDetail } from "../hooks/useErrorDetail";
 import { formatDate } from "@/utils/date";
+import { ErrorTagList } from "../components/ErrorTagList";
+import { DetailSection } from "../components/DetailSection";
 
 export const ErrorDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -43,77 +43,15 @@ export const ErrorDetail = () => {
         </Text>
         <Box px="10">
           <Box p="10" borderRadius="md">
-            <HStack mb="4">
-              {tags.map((tag) => (
-                <Tag.Root key={tag.id} size="xl">
-                  <Tag.Label>{tag.name}</Tag.Label>
-                </Tag.Root>
-              ))}
-            </HStack>
-            <Heading
-              as="h3"
-              textStyle="2xl"
-              pb="2"
-              mb="4"
-              borderBottomWidth="1px"
-            >
-              エラーメッセージ
-            </Heading>
-            <Text textStyle="16px" lineHeight="1.7">
-              {errorDetail?.message}
-            </Text>
-            <Heading
-              as="h3"
-              textStyle="2xl"
-              pb="2"
-              mt="12"
-              mb="4"
-              borderBottomWidth="1px"
-            >
-              発生状況
-            </Heading>
-            <Text textStyle="16px" lineHeight="1.7">
-              {errorDetail?.situation}
-            </Text>
-            <Heading
-              as="h3"
-              textStyle="2xl"
-              pb="2"
-              mt="12"
-              mb="4"
-              borderBottomWidth="1px"
-            >
-              環境
-            </Heading>
-            <Text textStyle="16px" lineHeight="1.7">
-              {errorDetail?.environment}
-            </Text>
-            <Heading
-              as="h3"
-              textStyle="2xl"
-              pb="2"
-              mt="12"
-              mb="4"
-              borderBottomWidth="1px"
-            >
-              原因
-            </Heading>
-            <Text textStyle="16px" lineHeight="1.7">
-              {errorDetail?.cause}
-            </Text>
-            <Heading
-              as="h3"
-              textStyle="2xl"
-              pb="2"
-              mt="12"
-              mb="4"
-              borderBottomWidth="1px"
-            >
-              解決方法
-            </Heading>
-            <Text textStyle="16px" lineHeight="1.7">
-              {errorDetail?.solution}
-            </Text>
+            <ErrorTagList tags={tags} size="xl" />
+            <DetailSection
+              title="エラーメッセージ"
+              content={errorDetail?.message}
+            />
+            <DetailSection title="発生状況" content={errorDetail?.situation} />
+            <DetailSection title="環境" content={errorDetail?.environment} />
+            <DetailSection title="原因" content={errorDetail?.cause} />
+            <DetailSection title="解決方法" content={errorDetail?.solution} />
             <Heading
               as="h3"
               textStyle="2xl"
