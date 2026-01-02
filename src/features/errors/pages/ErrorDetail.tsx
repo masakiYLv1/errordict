@@ -6,16 +6,25 @@ import {
   List,
   Tag,
   Text,
+  Link as ChakraLink,
 } from "@chakra-ui/react";
 import { Link as RouterLink, useParams } from "react-router-dom";
 
 import { Footer } from "@/components/common/Footer";
 import { Header } from "@/components/common/Header";
+import { useErrorDetail } from "../hooks/useErrorDetail";
+import { formatDate } from "@/utils/date";
 
 export const ErrorDetail = () => {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
+  const { errorDetail, error } = useErrorDetail(id);
 
-  console.log(id);
+  if (error) return <Text color="red.500">{error}</Text>;
+
+  const tags =
+    errorDetail?.error_tags.flatMap((et) =>
+      Array.isArray(et.tags) ? et.tags : [et.tags]
+    ) ?? [];
 
   return (
     <Box>
@@ -27,20 +36,19 @@ export const ErrorDetail = () => {
           </Button>
         </RouterLink>
         <Heading textStyle="4xl" textAlign="center" my="5">
-          タイトル
+          {errorDetail?.title}
         </Heading>
         <Text textStyle="sm" textAlign="center" mb="10">
-          登録日
+          {formatDate(errorDetail?.created_at)}
         </Text>
         <Box px="10">
           <Box p="10" borderRadius="md">
             <HStack mb="4">
-              <Tag.Root size="xl">
-                <Tag.Label>タグ</Tag.Label>
-              </Tag.Root>
-              <Tag.Root size="xl">
-                <Tag.Label>タグ2</Tag.Label>
-              </Tag.Root>
+              {tags.map((tag) => (
+                <Tag.Root key={tag.id} size="xl">
+                  <Tag.Label>{tag.name}</Tag.Label>
+                </Tag.Root>
+              ))}
             </HStack>
             <Heading
               as="h3"
@@ -52,7 +60,7 @@ export const ErrorDetail = () => {
               エラーメッセージ
             </Heading>
             <Text textStyle="16px" lineHeight="1.7">
-              エラーメッセージの内容が入ります。
+              {errorDetail?.message}
             </Text>
             <Heading
               as="h3"
@@ -65,7 +73,7 @@ export const ErrorDetail = () => {
               発生状況
             </Heading>
             <Text textStyle="16px" lineHeight="1.7">
-              発生状況の内容が入ります。
+              {errorDetail?.situation}
             </Text>
             <Heading
               as="h3"
@@ -78,7 +86,7 @@ export const ErrorDetail = () => {
               環境
             </Heading>
             <Text textStyle="16px" lineHeight="1.7">
-              環境の内容が入ります。
+              {errorDetail?.environment}
             </Text>
             <Heading
               as="h3"
@@ -91,7 +99,7 @@ export const ErrorDetail = () => {
               原因
             </Heading>
             <Text textStyle="16px" lineHeight="1.7">
-              原因の内容が入ります。
+              {errorDetail?.cause}
             </Text>
             <Heading
               as="h3"
@@ -104,7 +112,7 @@ export const ErrorDetail = () => {
               解決方法
             </Heading>
             <Text textStyle="16px" lineHeight="1.7">
-              解決方法の内容が入ります。
+              {errorDetail?.solution}
             </Text>
             <Heading
               as="h3"
@@ -117,16 +125,13 @@ export const ErrorDetail = () => {
               参考リンク
             </Heading>
             <List.Root unstyled>
-              <List.Item>
-                <Text textStyle="16px" lineHeight="1.7">
-                  参考リンクの内容が入ります。
-                </Text>
-              </List.Item>
-              <List.Item>
-                <Text textStyle="16px" lineHeight="1.7">
-                  参考リンクの内容が入ります。
-                </Text>
-              </List.Item>
+              {errorDetail?.reference_links.map((link, index) => (
+                <List.Item key={index}>
+                  <ChakraLink href={link} color="green.500" target="_blank">
+                    {link}
+                  </ChakraLink>
+                </List.Item>
+              ))}
             </List.Root>
           </Box>
         </Box>

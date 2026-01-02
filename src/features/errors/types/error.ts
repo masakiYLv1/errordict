@@ -13,6 +13,22 @@ export type ErrorApiResponse = {
   }[];
 };
 
+export type ErrorDetailApiResponse = {
+  id: string;
+  title: string;
+  message: string;
+  situation: string;
+  environment: string;
+  cause: string;
+  solution: string;
+  reference_links: [];
+  created_at: string;
+  updated_at: string;
+  error_tags: {
+    tags: ErrorTag[];
+  }[];
+};
+
 export type ErrorListItem = {
   id: string;
   title: string;
