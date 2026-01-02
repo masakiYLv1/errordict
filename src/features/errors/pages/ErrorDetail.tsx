@@ -33,7 +33,7 @@ export const ErrorDetail = () => {
           登録日
         </Text>
         <Box px="10">
-          <Box p="10" bg="red.50" borderRadius="md">
+          <Box p="10" borderRadius="md">
             <HStack mb="4">
               <Tag.Root size="xl">
                 <Tag.Label>タグ</Tag.Label>

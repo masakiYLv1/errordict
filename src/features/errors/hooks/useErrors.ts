@@ -7,7 +7,7 @@ export const useErrors = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchDate = async () => {
+    const fetchData = async () => {
       try {
         const data = await fetchErrors();
         if (data) {
@@ -24,7 +24,7 @@ export const useErrors = () => {
       }
     };
 
-    fetchDate();
+    fetchData();
   }, []);
 
   return { errors, error };
