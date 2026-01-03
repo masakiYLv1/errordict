@@ -2,7 +2,7 @@ import { Heading, Text } from "@chakra-ui/react";
 
 type ErrorDetailProps = {
   title: string;
-  content: string | undefined;
+  content: string | undefined | null;
 };
 
 export const DetailSection = ({ title, content }: ErrorDetailProps) => {

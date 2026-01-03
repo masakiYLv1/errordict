@@ -63,7 +63,7 @@ export const ErrorDetail = () => {
               参考リンク
             </Heading>
             <List.Root unstyled>
-              {errorDetail?.reference_links.map((link, index) => (
+              {(errorDetail?.reference_links ?? []).map((link, index) => (
                 <List.Item key={index}>
                   <ChakraLink href={link} color="green.500" target="_blank">
                     {link}
