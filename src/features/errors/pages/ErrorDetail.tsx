@@ -1,12 +1,5 @@
-import {
-  Box,
-  Button,
-  Heading,
-  List,
-  Text,
-  Link as ChakraLink,
-} from "@chakra-ui/react";
-import { Link as RouterLink, useParams } from "react-router-dom";
+import { Box, Heading, List, Text, Link as ChakraLink } from "@chakra-ui/react";
+import { useParams } from "react-router-dom";
 
 import { Footer } from "@/components/common/Footer";
 import { Header } from "@/components/common/Header";
@@ -14,6 +7,7 @@ import { useErrorDetail } from "../hooks/useErrorDetail";
 import { formatDate } from "@/utils/date";
 import { ErrorTagList } from "../components/ErrorTagList";
 import { DetailSection } from "../components/DetailSection";
+import { BackButton } from "@/components/common/button/BackButton";
 
 export const ErrorDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -30,11 +24,7 @@ export const ErrorDetail = () => {
     <Box>
       <Header action="edit" />
       <Box>
-        <RouterLink to="/">
-          <Button size="xs" variant="ghost" _hover={{ opacity: "0.7" }}>
-            ← 一覧へ戻る
-          </Button>
-        </RouterLink>
+        <BackButton to="/" />
         <Heading textStyle="4xl" textAlign="center" my="5">
           {errorDetail?.title}
         </Heading>
