@@ -13,7 +13,7 @@ export const ErrorsList = () => {
   return (
     <Box>
       <Header action="new" />
-      <Box px="10" mx="7">
+      <Box px="10" mx="10">
         <Box mb="5" w="40%" mx="auto">
           <Input placeholder="検索ボックス" />
         </Box>
