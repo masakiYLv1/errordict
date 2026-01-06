@@ -12,6 +12,9 @@ import {
 
 import { BackButton } from "@/components/common/button/BackButton";
 import { useForm, Controller } from "react-hook-form";
+import { supabase } from "@/lib/supabaseClient";
+import { toaster } from "@/components/ui/toaster";
+import { useNavigate } from "react-router-dom";
 
 type FormData = {
   title: string;
@@ -20,11 +23,12 @@ type FormData = {
   environment: string;
   cause: string;
   solution: string;
-  reference_links: string[];
+  reference_links: string;
   tags: string[];
 };
 
 export const ErrorNew = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -32,7 +36,46 @@ export const ErrorNew = () => {
     formState: { errors },
   } = useForm<FormData>();
 
-  const onSubmit = handleSubmit((data) => console.log(data));
+  const handleCreateData = async (data: FormData) => {
+    try {
+      // 参照リンク - データベースに配列で登録するための処理 -
+      const referenceLinks = data.reference_links
+        .split("\n")
+        .map((link) => link.trim())
+        .filter(Boolean);
+
+      const { error } = await supabase.from("errors").insert([
+        {
+          title: data.title,
+          message: data.message,
+          situation: data.situation,
+          environment: data.environment,
+          cause: data.cause,
+          solution: data.solution,
+          reference_links: referenceLinks,
+        },
+      ]);
+
+      if (error) {
+        throw error;
+      }
+
+      toaster.create({
+        title: "データを登録しました",
+        type: "success",
+      });
+
+      navigate("/");
+    } catch (err) {
+      console.log(err);
+
+      toaster.create({
+        title: "データの登録に失敗しました",
+        // description: error.message,
+        type: "error",
+      });
+    }
+  };
 
   return (
     <Box mb="12">
@@ -40,16 +83,22 @@ export const ErrorNew = () => {
         <BackButton to="/" />
       </Box>
       <Fieldset.Root size="lg" maxW="xl" mx="auto">
-        <form onSubmit={onSubmit}>
+        <form onSubmit={handleSubmit(handleCreateData)} noValidate>
           <Fieldset.Content>
-            <Field.Root invalid={!!errors.title}>
-              <Field.Label>タイトル</Field.Label>
+            <Field.Root required invalid={!!errors.title}>
+              <Field.Label>
+                タイトル
+                <Field.RequiredIndicator />
+              </Field.Label>
               <Input {...register("title", { required: "※ 必須項目です" })} />
               <Field.ErrorText>{errors.title?.message}</Field.ErrorText>
             </Field.Root>
 
-            <Field.Root invalid={!!errors.message}>
-              <Field.Label>エラーメッセージ</Field.Label>
+            <Field.Root required invalid={!!errors.message}>
+              <Field.Label>
+                エラーメッセージ
+                <Field.RequiredIndicator />
+              </Field.Label>
               <Textarea
                 {...register("message", { required: "※ 必須項目です" })}
                 autoresize
@@ -67,8 +116,11 @@ export const ErrorNew = () => {
               <Textarea {...register("environment")} autoresize />
             </Field.Root>
 
-            <Field.Root invalid={!!errors.cause}>
-              <Field.Label>原因</Field.Label>
+            <Field.Root required invalid={!!errors.cause}>
+              <Field.Label>
+                原因
+                <Field.RequiredIndicator />
+              </Field.Label>
               <Textarea
                 {...register("cause", { required: "※ 必須項目です" })}
                 autoresize
@@ -76,8 +128,11 @@ export const ErrorNew = () => {
               <Field.ErrorText>{errors.cause?.message}</Field.ErrorText>
             </Field.Root>
 
-            <Field.Root invalid={!!errors.solution}>
-              <Field.Label>解決方法</Field.Label>
+            <Field.Root required invalid={!!errors.solution}>
+              <Field.Label>
+                解決方法
+                <Field.RequiredIndicator />
+              </Field.Label>
               <Textarea
                 {...register("solution", { required: "※ 必須項目です" })}
                 autoresize
@@ -87,7 +142,11 @@ export const ErrorNew = () => {
 
             <Field.Root>
               <Field.Label>参考リンク</Field.Label>
-              <Textarea {...register("reference_links")} autoresize />
+              <Textarea
+                placeholder="1行1URLで入力"
+                {...register("reference_links")}
+                autoresize
+              />
             </Field.Root>
 
             <Field.Root mb="4">
@@ -117,7 +176,11 @@ export const ErrorNew = () => {
             <Button type="submit" bg="fg.info" _hover={{ opacity: "0.7" }}>
               登録
             </Button>
-            <Button type="button" variant="outline">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => navigate(-1)}
+            >
               キャンセル
             </Button>
           </HStack>
