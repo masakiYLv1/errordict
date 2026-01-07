@@ -100,7 +100,7 @@ export const ErrorNew = () => {
         type: "success",
       });
 
-      navigate("/");
+      navigate(`/errors/${errorId.id}`);
     } catch (err) {
       console.log(err);
 
