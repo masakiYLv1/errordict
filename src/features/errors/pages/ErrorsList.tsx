@@ -6,7 +6,7 @@ import { useErrors } from "../hooks/useErrors";
 import { ErrorCard } from "../components/ErrorCard";
 
 export const ErrorsList = () => {
-  const { errors, error } = useErrors();
+  const { errorList, error } = useErrors();
 
   if (error) return <Text color="red.500">{error}</Text>;
 
@@ -19,9 +19,9 @@ export const ErrorsList = () => {
         </Box>
         <Box>
           <List.Root unstyled>
-            {errors.map((item) => (
+            {errorList.map((item) => (
               <List.Item key={item.id} mb="5">
-                <ErrorCard error={item} />
+                <ErrorCard errorItem={item} />
               </List.Item>
             ))}
           </List.Root>

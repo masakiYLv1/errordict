@@ -6,19 +6,19 @@ import { formatDate } from "@/utils/date";
 import { ErrorTagList } from "./ErrorTagList";
 
 type ErrorCardProps = {
-  error: ErrorListItem;
+  errorItem: ErrorListItem;
 };
 
-export const ErrorCard = ({ error }: ErrorCardProps) => {
+export const ErrorCard = ({ errorItem }: ErrorCardProps) => {
   return (
-    <RouterLink to={`/errors/${error.id}`}>
+    <RouterLink to={`/errors/${errorItem.id}`}>
       <Card.Root>
         <Card.Body>
           <Card.Title mb="2" textStyle="2xl">
-            {error.title}
+            {errorItem.title}
           </Card.Title>
-          <ErrorTagList tags={error.tags} size="sm" />
-          <Text fontSize="14px">{formatDate(error.created_at)}</Text>
+          <ErrorTagList tags={errorItem.tags} size="sm" />
+          <Text fontSize="14px">{formatDate(errorItem.created_at)}</Text>
         </Card.Body>
       </Card.Root>
     </RouterLink>

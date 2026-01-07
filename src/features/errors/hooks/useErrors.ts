@@ -3,7 +3,7 @@ import { fetchErrors } from "../api/fetchErrors";
 import { type ErrorListItem } from "../types/error";
 
 export const useErrors = () => {
-  const [errors, setErrors] = useState<ErrorListItem[]>([]);
+  const [errorList, setErrorList] = useState<ErrorListItem[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -16,7 +16,7 @@ export const useErrors = () => {
             tags: item.error_tags.flatMap((t) => t.tags),
           }));
 
-          setErrors(formattedErrors);
+          setErrorList(formattedErrors);
         }
       } catch (err) {
         console.error(err);
@@ -27,5 +27,5 @@ export const useErrors = () => {
     fetchData();
   }, []);
 
-  return { errors, error };
+  return { errorList, error };
 };
