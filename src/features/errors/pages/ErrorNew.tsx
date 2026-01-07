@@ -77,7 +77,7 @@ export const ErrorNew = () => {
         .select("id");
 
       if (!tagsId || tagsError) {
-        throw tagsError ?? new Error("Faild to upsert tags");
+        throw tagsError ?? new Error("Failed to upsert tags");
       }
 
       // error_tagsテーブル tagsId → tagId 中間テーブル用に定義
