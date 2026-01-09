@@ -28,6 +28,7 @@ export const ErrorForm = ({ onSuccess, onCancel }: Props) => {
 
   const onSubmit = async (data: FormData) => {
     const id = await handleCreateData(data);
+    if (!id) return;
     onSuccess(id);
   };
 

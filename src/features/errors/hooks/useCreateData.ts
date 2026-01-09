@@ -3,7 +3,9 @@ import { toaster } from "@/components/ui/toaster";
 import type { FormData } from "../types/form";
 
 export const useCreateData = () => {
-  const handleCreateData = async (insertFormData: FormData) => {
+  const handleCreateData = async (
+    insertFormData: FormData
+  ): Promise<string | undefined | null> => {
     try {
       // errorテーブル 参照リンク - データベースに配列で登録するための処理 -
       const referenceLinks = insertFormData.reference_links
@@ -32,34 +34,37 @@ export const useCreateData = () => {
         throw errorMessage ?? new Error("Failed to insert error record");
       }
 
-      // tagsテーブル tagsをSupabaseに登録するための処理
-      const tagsNameToInsert = insertFormData.tags.map((tag) => ({
-        name: tag,
-      }));
+      // tagsテーブル tags=[]対策
+      if (insertFormData.tags.length > 0) {
+        // tagsテーブル tagsをSupabaseに登録するための処理
+        const tagsNameToInsert = insertFormData.tags.map((tag) => ({
+          name: tag,
+        }));
 
-      // tagsテーブル upsert
-      const { data: tagsId, error: tagsError } = await supabase
-        .from("tags")
-        .upsert(tagsNameToInsert, { onConflict: "name" })
-        .select("id");
+        // tagsテーブル upsert
+        const { data: tagsId, error: tagsError } = await supabase
+          .from("tags")
+          .upsert(tagsNameToInsert, { onConflict: "name" })
+          .select("id");
 
-      if (!tagsId || tagsError) {
-        throw tagsError ?? new Error("Failed to upsert tags");
-      }
+        if (!tagsId || tagsError) {
+          throw tagsError ?? new Error("Failed to upsert tags");
+        }
 
-      // error_tagsテーブル tagsId → tagId 中間テーブル用に定義
-      const errorTagsToInsert = tagsId?.map((tagId) => ({
-        error_id: errorId.id,
-        tag_id: tagId.id,
-      }));
+        // error_tagsテーブル tagsId → tagId 中間テーブル用に定義
+        const errorTagsToInsert = tagsId?.map((tagId) => ({
+          error_id: errorId.id,
+          tag_id: tagId.id,
+        }));
 
-      // error_tagsテーブル 中間テーブル insert
-      const { error: errorTagsError } = await supabase
-        .from("error_tags")
-        .insert(errorTagsToInsert);
+        // error_tagsテーブル 中間テーブル insert
+        const { error: errorTagsError } = await supabase
+          .from("error_tags")
+          .insert(errorTagsToInsert);
 
-      if (errorTagsError) {
-        throw errorTagsError;
+        if (errorTagsError) {
+          throw errorTagsError;
+        }
       }
 
       toaster.create({
