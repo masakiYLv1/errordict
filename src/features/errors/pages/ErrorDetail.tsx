@@ -8,6 +8,7 @@ import { formatDate } from "@/utils/date";
 import { ErrorTagList } from "../components/ErrorTagList";
 import { DetailSection } from "../components/DetailSection";
 import { BackButton } from "@/components/common/button/BackButton";
+import { ErrorIdContext } from "../components/contexts/ErrorIdContext";
 
 export const ErrorDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -22,49 +23,54 @@ export const ErrorDetail = () => {
 
   return (
     <Box>
-      <Header action="edit" id={id} />
-      <Box>
-        <BackButton to="/" />
-        <Heading textStyle="4xl" textAlign="center" my="5">
-          {errorDetail?.title}
-        </Heading>
-        <Text textStyle="sm" textAlign="center" mb="10">
-          {formatDate(errorDetail?.created_at)}
-        </Text>
-        <Box px="10">
-          <Box p="10" borderRadius="md">
-            <ErrorTagList tags={tags} size="xl" />
-            <DetailSection
-              title="エラーメッセージ"
-              content={errorDetail?.message}
-            />
-            <DetailSection title="発生状況" content={errorDetail?.situation} />
-            <DetailSection title="環境" content={errorDetail?.environment} />
-            <DetailSection title="原因" content={errorDetail?.cause} />
-            <DetailSection title="解決方法" content={errorDetail?.solution} />
-            <Heading
-              as="h3"
-              textStyle="2xl"
-              pb="2"
-              mt="12"
-              mb="4"
-              borderBottomWidth="1px"
-            >
-              参考リンク
-            </Heading>
-            <List.Root unstyled>
-              {(errorDetail?.reference_links ?? []).map((link, index) => (
-                <List.Item key={index}>
-                  <ChakraLink href={link} color="green.500" target="_blank">
-                    {link}
-                  </ChakraLink>
-                </List.Item>
-              ))}
-            </List.Root>
+      <ErrorIdContext value={id}>
+        <Header action="edit" />
+        <Box>
+          <BackButton to="/" />
+          <Heading textStyle="4xl" textAlign="center" my="5">
+            {errorDetail?.title}
+          </Heading>
+          <Text textStyle="sm" textAlign="center" mb="10">
+            {formatDate(errorDetail?.created_at)}
+          </Text>
+          <Box px="10">
+            <Box p="10" borderRadius="md">
+              <ErrorTagList tags={tags} size="xl" />
+              <DetailSection
+                title="エラーメッセージ"
+                content={errorDetail?.message}
+              />
+              <DetailSection
+                title="発生状況"
+                content={errorDetail?.situation}
+              />
+              <DetailSection title="環境" content={errorDetail?.environment} />
+              <DetailSection title="原因" content={errorDetail?.cause} />
+              <DetailSection title="解決方法" content={errorDetail?.solution} />
+              <Heading
+                as="h3"
+                textStyle="2xl"
+                pb="2"
+                mt="12"
+                mb="4"
+                borderBottomWidth="1px"
+              >
+                参考リンク
+              </Heading>
+              <List.Root unstyled>
+                {(errorDetail?.reference_links ?? []).map((link, index) => (
+                  <List.Item key={index}>
+                    <ChakraLink href={link} color="green.500" target="_blank">
+                      {link}
+                    </ChakraLink>
+                  </List.Item>
+                ))}
+              </List.Root>
+            </Box>
           </Box>
         </Box>
-      </Box>
-      <Footer />
+        <Footer />
+      </ErrorIdContext>
     </Box>
   );
 };

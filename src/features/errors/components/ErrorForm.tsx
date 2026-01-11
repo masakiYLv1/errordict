@@ -10,20 +10,36 @@ import { useForm } from "react-hook-form";
 
 import { TagInputField } from "./TagInputField";
 import type { FormData } from "../types/form";
+import { useEffect } from "react";
 
 type Props = {
+  defaultValues?: FormData;
   onSubmit: (data: FormData) => Promise<void>;
   onCancel: () => void;
   submitLabel: string;
 };
 
-export const ErrorForm = ({ onSubmit, onCancel, submitLabel }: Props) => {
+export const ErrorForm = ({
+  defaultValues,
+  onSubmit,
+  onCancel,
+  submitLabel,
+}: Props) => {
   const {
     register,
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<FormData>();
+    reset,
+  } = useForm<FormData>({
+    defaultValues,
+  });
+
+  useEffect(() => {
+    if (defaultValues) {
+      reset(defaultValues);
+    }
+  }, [defaultValues, reset]);
 
   return (
     <Fieldset.Root size="lg" maxW="xl" mx="auto">

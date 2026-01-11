@@ -8,10 +8,9 @@ type HeaderAction = "new" | "edit";
 
 type HeaderProps = {
   action: HeaderAction;
-  id: string | undefined;
 };
 
-export const Header = ({ action, id }: HeaderProps) => {
+export const Header = ({ action }: HeaderProps) => {
   return (
     <>
       <Box px="10" py="5">
@@ -20,7 +19,7 @@ export const Header = ({ action, id }: HeaderProps) => {
             <Heading as="h1">ErrorDict</Heading>
           </RouterLink>
           {action === "new" && <NewErrorButton />}
-          {action === "edit" && <EditErrorButton id={id} />}
+          {action === "edit" && <EditErrorButton />}
         </Flex>
       </Box>
       <Separator size="md" pb="5" />
