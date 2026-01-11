@@ -4,13 +4,18 @@ import { useNavigate, useParams } from "react-router-dom";
 import { BackButton } from "@/components/common/button/BackButton";
 import { ErrorForm } from "../components/ErrorForm";
 import { useErrorDetail } from "../hooks/useErrorDetail";
+import { useErrorUpdate } from "../hooks/useErrorUpdate";
+import type { FormData } from "../types/form";
 
 export const ErrorEdit = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const { errorDetail, error } = useErrorDetail(id);
+  const { handleUpdateData } = useErrorUpdate();
 
   if (error) return <Text color="red.500">{error}</Text>;
+  if (!errorDetail) return null;
+  if (!id) return;
 
   // タグをForm用に変換
   const tags =
@@ -31,7 +36,8 @@ export const ErrorEdit = () => {
   };
 
   // Update処理
-  const handleSubmit = (updateId: string) => {
+  const handleSubmit = async (data: FormData) => {
+    const updateId = await handleUpdateData(errorDetail.id, data);
     navigate(`/errors/${updateId}`);
   };
 
