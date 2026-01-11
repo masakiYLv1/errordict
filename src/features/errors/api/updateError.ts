@@ -1,6 +1,6 @@
 import { supabase } from "@/lib/supabaseClient";
 
-type payloadProps = {
+type payload = {
   title: string;
   message: string;
   situation: string | null;
@@ -11,7 +11,7 @@ type payloadProps = {
 
 export const updateError = async (
   id: string,
-  payload: payloadProps,
+  payload: payload,
   tags: { name: string }[]
 ) => {
   // errorsテーブル更新
