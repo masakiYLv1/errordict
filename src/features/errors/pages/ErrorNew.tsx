@@ -1,13 +1,18 @@
 import { Box } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 import { BackButton } from "@/components/common/button/BackButton";
 import { ErrorForm } from "../components/ErrorForm";
-import { useNavigate } from "react-router-dom";
+import { useCreateData } from "../hooks/useCreateData";
+import type { FormData } from "../types/form";
 
 export const ErrorNew = () => {
   const navigate = useNavigate();
+  const { handleCreateData } = useCreateData();
 
-  const handleSuccess = (id: string) => {
+  const handleSubmit = async (data: FormData) => {
+    const id = await handleCreateData(data);
+    if (!id) return;
     navigate(`/errors/${id}`);
   };
 
@@ -20,7 +25,11 @@ export const ErrorNew = () => {
       <Box mt="16">
         <BackButton to="/" />
       </Box>
-      <ErrorForm onSuccess={handleSuccess} onCancel={handleCancel} />
+      <ErrorForm
+        onSubmit={handleSubmit}
+        onCancel={handleCancel}
+        submitLabel="登録"
+      />
     </Box>
   );
 };

@@ -9,28 +9,21 @@ import {
 import { useForm } from "react-hook-form";
 
 import { TagInputField } from "./TagInputField";
-import { useCreateData } from "../hooks/useCreateData";
 import type { FormData } from "../types/form";
 
 type Props = {
-  onSuccess: (id: string) => void;
+  onSubmit: (data: FormData) => Promise<void>;
   onCancel: () => void;
+  submitLabel: string;
 };
 
-export const ErrorForm = ({ onSuccess, onCancel }: Props) => {
+export const ErrorForm = ({ onSubmit, onCancel, submitLabel }: Props) => {
   const {
     register,
     handleSubmit,
     control,
     formState: { errors },
   } = useForm<FormData>();
-  const { handleCreateData } = useCreateData();
-
-  const onSubmit = async (data: FormData) => {
-    const id = await handleCreateData(data);
-    if (!id) return;
-    onSuccess(id);
-  };
 
   return (
     <Fieldset.Root size="lg" maxW="xl" mx="auto">
@@ -104,7 +97,7 @@ export const ErrorForm = ({ onSuccess, onCancel }: Props) => {
         </Fieldset.Content>
         <HStack gap="4">
           <Button type="submit" bg="fg.info" _hover={{ opacity: "0.7" }}>
-            登録
+            {submitLabel}
           </Button>
           <Button type="button" variant="outline" onClick={onCancel}>
             キャンセル

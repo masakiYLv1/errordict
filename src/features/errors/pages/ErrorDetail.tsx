@@ -22,7 +22,7 @@ export const ErrorDetail = () => {
 
   return (
     <Box>
-      <Header action="edit" />
+      <Header action="edit" id={id} />
       <Box>
         <BackButton to="/" />
         <Heading textStyle="4xl" textAlign="center" my="5">
