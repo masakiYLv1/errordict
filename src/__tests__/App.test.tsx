@@ -16,7 +16,7 @@ describe("App tests", () => {
       </Provider>
     );
 
-    const input = await screen.findByPlaceholderText("検索ボックス");
+    const input = await screen.findByPlaceholderText("タイトルで検索");
     expect(input).toBeInTheDocument();
   });
 });
