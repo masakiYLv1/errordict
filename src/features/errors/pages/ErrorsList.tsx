@@ -1,22 +1,23 @@
-import { Box, Input, List, Text } from "@chakra-ui/react";
+import { Box, List, Text } from "@chakra-ui/react";
 
 import { Footer } from "@/components/common/Footer";
 import { Header } from "@/components/common/Header";
 import { useErrors } from "../hooks/useErrors";
 import { ErrorCard } from "../components/ErrorCard";
+import { ErrorSerchInput } from "../components/ErrorSerchInput";
+import { useState } from "react";
 
 export const ErrorsList = () => {
-  const { errorList, error } = useErrors();
+  const [keyword, setKeyword] = useState("");
+  const { errorList, error } = useErrors(keyword);
 
   if (error) return <Text color="red.500">{error}</Text>;
 
   return (
     <Box>
       <Header action="new" />
+      <ErrorSerchInput value={keyword} onChange={setKeyword} />
       <Box px="10" mx="10">
-        <Box mb="5" w="40%" mx="auto">
-          <Input placeholder="検索ボックス" />
-        </Box>
         <Box>
           <List.Root unstyled>
             {errorList.map((item) => (
