@@ -9,10 +9,15 @@ import { ErrorTagList } from "../components/ErrorTagList";
 import { DetailSection } from "../components/DetailSection";
 import { BackButton } from "@/components/common/button/BackButton";
 import { ErrorIdContext } from "../components/contexts/ErrorIdContext";
+import { Loading } from "@/components/common/Loading";
 
 export const ErrorDetail = () => {
   const { id } = useParams<{ id: string }>();
-  const { errorDetail, error } = useErrorDetail(id);
+  const { errorDetail, error, isLoading } = useErrorDetail(id);
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   if (error) return <Text color="red.500">{error}</Text>;
 

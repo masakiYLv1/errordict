@@ -1,9 +1,15 @@
+import { useState } from "react";
+
 import { toaster } from "@/components/ui/toaster";
 import type { FormData } from "../types/form";
 import { updateError } from "../api/updateError";
 
 export const useErrorUpdate = () => {
+  const [isLoadingUpdate, setIsLoadingUpdate] = useState(false);
+
   const handleUpdateData = async (id: string, data: FormData) => {
+    setIsLoadingUpdate(true);
+
     try {
       // errorテーブル 参照リンク データベースに配列で登録するための処理
       const referenceLinks = data.reference_links
@@ -42,8 +48,10 @@ export const useErrorUpdate = () => {
         // description: error.message,
         type: "error",
       });
+    } finally {
+      setIsLoadingUpdate(false);
     }
   };
 
-  return { handleUpdateData };
+  return { handleUpdateData, isLoadingUpdate };
 };

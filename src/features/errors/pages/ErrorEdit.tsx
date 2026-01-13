@@ -6,15 +6,26 @@ import { ErrorForm } from "../components/ErrorForm";
 import { useErrorDetail } from "../hooks/useErrorDetail";
 import { useErrorUpdate } from "../hooks/useErrorUpdate";
 import type { FormData } from "../types/form";
+import { Loading } from "@/components/common/Loading";
 
 export const ErrorEdit = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
-  const { errorDetail, error } = useErrorDetail(id);
-  const { handleUpdateData } = useErrorUpdate();
+  const { errorDetail, error, isLoading } = useErrorDetail(id);
+  const { handleUpdateData, isLoadingUpdate } = useErrorUpdate();
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (isLoadingUpdate) {
+    return <Loading message="Updating..." />;
+  }
 
   if (error) return <Text color="red.500">{error}</Text>;
+
   if (!errorDetail) return null;
+
   if (!id) return;
 
   // タグをForm用に変換

@@ -6,10 +6,15 @@ import { Header } from "@/components/common/Header";
 import { useErrors } from "../hooks/useErrors";
 import { ErrorCard } from "../components/ErrorCard";
 import { ErrorSearchInput } from "../components/ErrorSearchInput";
+import { Loading } from "@/components/common/Loading";
 
 export const ErrorsList = () => {
   const [keyword, setKeyword] = useState("");
-  const { errorList, error } = useErrors(keyword);
+  const { errorList, error, isLoading } = useErrors(keyword);
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   if (error) return <Text color="red.500">{error}</Text>;
 

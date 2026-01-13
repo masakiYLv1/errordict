@@ -1,11 +1,17 @@
+import { useState } from "react";
+
 import { supabase } from "@/lib/supabaseClient";
 import { toaster } from "@/components/ui/toaster";
 import type { FormData } from "../types/form";
 
 export const useCreateData = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleCreateData = async (
     insertFormData: FormData
   ): Promise<string | undefined | null> => {
+    setIsLoading(true);
+
     try {
       // errorテーブル 参照リンク - データベースに配列で登録するための処理 -
       const referenceLinks = insertFormData.reference_links
@@ -81,8 +87,10 @@ export const useCreateData = () => {
         // description: error.message,
         type: "error",
       });
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  return { handleCreateData };
+  return { handleCreateData, isLoading };
 };
