@@ -1,11 +1,11 @@
 import { Box, List, Text } from "@chakra-ui/react";
+import { useState } from "react";
 
 import { Footer } from "@/components/common/Footer";
 import { Header } from "@/components/common/Header";
 import { useErrors } from "../hooks/useErrors";
 import { ErrorCard } from "../components/ErrorCard";
-import { ErrorSerchInput } from "../components/ErrorSerchInput";
-import { useState } from "react";
+import { ErrorSearchInput } from "../components/ErrorSearchInput";
 
 export const ErrorsList = () => {
   const [keyword, setKeyword] = useState("");
@@ -16,7 +16,7 @@ export const ErrorsList = () => {
   return (
     <Box>
       <Header action="new" />
-      <ErrorSerchInput value={keyword} onChange={setKeyword} />
+      <ErrorSearchInput value={keyword} onChange={setKeyword} />
       <Box px="10" mx="10">
         <Box>
           <List.Root unstyled>

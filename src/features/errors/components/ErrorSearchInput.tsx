@@ -5,7 +5,7 @@ type Props = {
   onChange: (value: string) => void;
 };
 
-export const ErrorSerchInput = ({ value, onChange }: Props) => {
+export const ErrorSearchInput = ({ value, onChange }: Props) => {
   return (
     <Box mb="5" w="40%" mx="auto">
       <Input
