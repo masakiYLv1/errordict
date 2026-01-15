@@ -8,10 +8,8 @@ export const EditErrorButton = () => {
   const id = useContext(ErrorIdContext);
 
   return (
-    <RouterLink to={`/errors/${id}/edit`}>
-      <Button size="sm" bg="fg.info" _hover={{ opacity: "0.7" }}>
-        編集
-      </Button>
-    </RouterLink>
+    <Button asChild size="sm" bg="fg.info" _hover={{ opacity: 0.7 }}>
+      <RouterLink to={`/errors/${id}/edit`}>編集</RouterLink>
+    </Button>
   );
 };

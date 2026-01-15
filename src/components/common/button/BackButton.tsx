@@ -8,10 +8,8 @@ type BackButtonProps = {
 
 export const BackButton = ({ to, label = "← 一覧へ戻る" }: BackButtonProps) => {
   return (
-    <RouterLink to={to}>
-      <Button size="xs" variant="ghost" _hover={{ opacity: "0.7" }}>
-        {label}
-      </Button>
-    </RouterLink>
+    <Button asChild size="xs" variant="ghost" _hover={{ opacity: 0.7 }}>
+      <RouterLink to={to}>{label}</RouterLink>
+    </Button>
   );
 };
